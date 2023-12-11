@@ -1,0 +1,8 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background: -webkit-linear-gradient(right, #610C9F 50%, #191919 50%);
+    background: -o-linear-gradient(right, #610C9F 50%, #191919 50%);
+    background: -moz-linear-gradient(right, #610C9F 50%, #191919 50%);
+    background: linear-gradient(to right, #610C9F 50%, #191919 50%);
+}
