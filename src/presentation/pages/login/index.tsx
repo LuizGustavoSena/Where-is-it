@@ -1,3 +1,4 @@
+import Truck from '@/presentation/assets/images/TruckMobile.png';
 import React, { memo } from "react";
 import style from './index.module.css';
 
@@ -22,7 +23,9 @@ const Login: React.FC = () => {
                         Entrar
                     </button>
                 </div>
-
+                <div className={style.rightMenu}>
+                    <img src={Truck} alt='Truck' />
+                </div>
             </div>
         </div>
     )

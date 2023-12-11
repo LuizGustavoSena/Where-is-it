@@ -8,6 +8,7 @@
         width: 60vw;
         height: 70vh;
         position: absolute;
+        display: flex;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -70,6 +71,18 @@
                 color: white;
                 width: 60%;
                 cursor: pointer;
+            }
+        }
+
+        .rightMenu {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+
+            img {
+                height: 70%;
+                margin-top: 150px;
             }
         }
     }
