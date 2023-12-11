@@ -1,6 +1,6 @@
+import { AxiosHttpClient } from '@/infra/http';
 import { describe, expect, it, vi } from 'vitest';
 import { mockRequest } from '../../data/mocks';
-import { AxiosHttpClient } from '../../infra/http';
 import { mockAxios } from '../mocks';
 
 vi.mock('axios');
