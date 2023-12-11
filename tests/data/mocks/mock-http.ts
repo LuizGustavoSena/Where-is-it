@@ -1,5 +1,5 @@
 import { HttpClient, HttpRequest, HttpResponse, HttpStatusCode } from "@/data/protocols/http";
-import faker from "faker";
+import * as faker from "faker";
 
 type RequestProps = {
     method?: 'get' | 'post' | 'put' | 'delete' | 'patch';
@@ -16,16 +16,16 @@ export const mockRequest = (params?: RequestProps): HttpRequest => {
     }
 }
 
-export class HttpClientSpy<T = any> implements HttpClient {
+export class HttpClientSpy implements HttpClient {
     url?: string;
     method?: string;
     body?: any;
     headers?: any;
-    response: HttpResponse<T> = {
+    response: HttpResponse<any> = {
         statusCode: HttpStatusCode.Ok
     }
 
-    async request(params: HttpRequest): Promise<{ statusCode: HttpStatusCode; body?: any; }> {
+    async request<T = any>(params: HttpRequest): Promise<{ statusCode: HttpStatusCode; body?: T; }> {
         const { method, url, body, headers } = params;
 
         this.url = url;
