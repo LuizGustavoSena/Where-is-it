@@ -1,5 +1,6 @@
 import Truck from '@/presentation/assets/images/TruckMobile.png';
 import React, { memo } from "react";
+import { Link } from 'react-router-dom';
 import style from './index.module.css';
 
 const Login: React.FC = () => {
@@ -16,11 +17,13 @@ const Login: React.FC = () => {
                     </div>
 
                     <div className={style.buttons}>
-                        <button className={style.createAccount}>Criar conta</button>
+                        <Link to="createAccount" className={style.createAccount}>
+                            Criar conta
+                        </Link>
 
-                        <button className={style.Login}>
+                        <Link to="/" className={style.login}>
                             Entrar
-                        </button>
+                        </Link>
                     </div>
                 </div>
                 <div className={style.rightMenu}>

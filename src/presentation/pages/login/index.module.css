@@ -57,7 +57,7 @@
                 width: 60%;
 
                 .createAccount,
-                .Login {
+                .login {
                     width: 40%;
                     cursor: pointer;
                     border-radius: 5px;
@@ -68,10 +68,15 @@
                 .createAccount {
                     background: transparent;
                     color: var(--primary-color);
+                    text-decoration: none;
+                    border: 1px solid var(--primary-color);
+                    text-align: center;
                 }
 
-                .Login {
+                .login {
                     width: 40%;
+                    text-decoration: none;
+                    text-align: center;
                     background-color: var(--primary-color);
                     color: white;
                     border: none;
