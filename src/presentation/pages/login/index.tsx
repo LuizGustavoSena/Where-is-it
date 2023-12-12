@@ -15,13 +15,13 @@ const Login: React.FC = () => {
 
                     </div>
 
-                    <div className={style.createAccount}>
-                        <a>Criar conta</a>
-                    </div>
+                    <div className={style.buttons}>
+                        <button className={style.createAccount}>Criar conta</button>
 
-                    <button>
-                        Entrar
-                    </button>
+                        <button className={style.Login}>
+                            Entrar
+                        </button>
+                    </div>
                 </div>
                 <div className={style.rightMenu}>
                     <img src={Truck} alt='Truck' />

@@ -1,8 +1,13 @@
+:root {
+    --primary-color: #5D6A90;
+    --second-color: #7BCEA6;
+}
+
 body {
     margin: 0px;
     padding: 0px;
-    background: -webkit-linear-gradient(right, #610C9F 50%, #191919 50%);
-    background: -o-linear-gradient(right, #610C9F 50%, #191919 50%);
-    background: -moz-linear-gradient(right, #610C9F 50%, #191919 50%);
-    background: linear-gradient(to right, #610C9F 50%, #191919 50%);
+    background: -webkit-linear-gradient(right, var(--primary-color) 50%, var(--second-color) 50%);
+    background: -o-linear-gradient(right, var(--primary-color) 50%, var(--second-color) 50%);
+    background: -moz-linear-gradient(right, var(--primary-color) 50%, var(--second-color) 50%);
+    background: linear-gradient(to right, var(--primary-color) 50%, var(--second-color) 50%);
 }
