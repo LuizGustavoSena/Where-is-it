@@ -6,8 +6,8 @@ const MakeRoutes: React.FC = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MakeLogin />} />
                 <Route path="/createAccount" element={<MakeCreateAccount />} />
+                <Route path="/" element={<MakeLogin />} />
             </Routes>
         </BrowserRouter>
     )
