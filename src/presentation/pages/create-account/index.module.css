@@ -70,7 +70,8 @@
     justify-content: center;
 
     img {
-        height: 70%;
+        width: 120%;
         margin-top: 150px;
+        object-fit: contain;
     }
 }
