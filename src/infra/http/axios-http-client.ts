@@ -14,7 +14,7 @@ export class AxiosHttpClient implements HttpClient {
                 headers: headers
             });
         } catch (error: any) {
-            response = error.response
+            response = error.response;
         }
 
         return {

@@ -29,6 +29,8 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
     };
 
     const handleCreateAccount = async () => {
+        setMessageError('');
+
         try {
             setLoading(true);
 

@@ -1,6 +1,6 @@
 import { CreateAccountError } from "@/domain/error/create-account-error";
 import { AddAccount, RequestAddAccount } from "@/domain/usecases";
-import { HttpClient } from "../protocols/http";
+import { HttpClient, HttpStatusCode } from "../protocols/http";
 
 export class RemoteAddAccount implements AddAccount {
     constructor(
@@ -18,8 +18,8 @@ export class RemoteAddAccount implements AddAccount {
             }
         });
 
-        if (!response)
-            throw new CreateAccountError();
+        if (response.statusCode !== HttpStatusCode.Created)
+            throw new CreateAccountError(response.body);
     };
 
 }
