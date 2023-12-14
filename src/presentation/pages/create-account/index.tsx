@@ -74,7 +74,7 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
                             Fazer login
                         </Link>
 
-                        <button className={style.login} onClick={() => handleCreateAccount()}>
+                        <button className={style.login} onClick={async () => await handleCreateAccount()}>
                             Cadastrar
                         </button>
                     </div>
