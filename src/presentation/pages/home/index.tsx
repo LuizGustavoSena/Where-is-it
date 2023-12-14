@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 
 const Home: React.FC = () => {
     return (
@@ -8,4 +8,4 @@ const Home: React.FC = () => {
     )
 };
 
-export default memo(Home);
+export default Home;

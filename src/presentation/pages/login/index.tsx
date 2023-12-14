@@ -6,7 +6,7 @@ import Truck from '@/presentation/assets/images/TruckMobile.png';
 import Loading from '@/presentation/components/loading';
 import MiddleBox from '@/presentation/components/middle-box';
 import React, { memo, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
 import style from './index.module.css';
 
 type Props = {
@@ -37,6 +37,7 @@ const Login: React.FC<Props> = ({ login, storage }) => {
 
             setLoading(false);
 
+            redirect('/home');
         } catch (error) {
             setLoading(false);
 
