@@ -61,6 +61,12 @@
             border: none;
         }
     }
+
+    p {
+        color: red;
+        font-size: 20px;
+        margin: 0px 0px 10px 0px;
+    }
 }
 
 .rightMenu {

@@ -15,6 +15,7 @@ type Props = {
 const CreateAccount: React.FC<Props> = ({ addAccount }) => {
     const [account, setAccount] = useState<CreateAccountModel>();
     const [messageError, setMessageError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const generateAccount = (props: Partial<CreateAccountModel>) => {
         if (props?.email)
@@ -29,12 +30,18 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
 
     const handleCreateAccount = async () => {
         try {
+            setLoading(true);
+
             await addAccount.add(account);
+
+            setLoading(false);
 
             redirect('/');
         } catch (error) {
-            if (error instanceof CreateAccountError)
-                setMessageError('Erro ao criar conta');
+            setLoading(false);
+
+            setMessageError(error instanceof CreateAccountError ?
+                error.message : 'Erro inesperado');
         }
     };
 
@@ -43,8 +50,6 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
             <MiddleBox>
                 <div className={style.leftMenu}>
                     <label>Novo por aqui?</label>
-                    {JSON.stringify(account)}
-
                     <div className={style.inputs}>
                         <input type="text" placeholder="Usuário" required
                             onChange={e => generateAccount({ username: e.target.value })}
@@ -56,6 +61,10 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
                             onChange={e => generateAccount({ password: e.target.value })}
                         />
                     </div>
+
+                    {messageError.length > 0 && (
+                        <p>{messageError}</p>
+                    )}
 
                     <div className={style.buttons}>
                         <Link to="/" className={style.createAccount}>
@@ -71,7 +80,7 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
                     <img src={Truck} alt='Truck' />
                 </div>
             </MiddleBox>
-            <Loading />
+            <Loading show={loading} />
         </>
     )
 }
