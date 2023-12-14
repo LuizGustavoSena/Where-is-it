@@ -1,6 +1,6 @@
 export class LoginAccountError extends Error {
-    constructor() {
-        super('Erro ao efetuar login');
+    constructor(message?: string) {
+        super(message || 'Erro ao efetuar login');
         this.name = 'LoginAccountError';
     };
 };

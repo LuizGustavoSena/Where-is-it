@@ -18,7 +18,7 @@ export class RemoteLoginAccount implements LoginAccount {
         });
 
         if (response.statusCode !== HttpStatusCode.Created)
-            throw new LoginAccountError();
+            throw new LoginAccountError(response.body);
 
         return response.body;
     };

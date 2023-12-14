@@ -6,7 +6,7 @@ import Truck from '@/presentation/assets/images/TruckMobile.png';
 import Loading from '@/presentation/components/loading';
 import MiddleBox from '@/presentation/components/middle-box';
 import React, { memo, useState } from "react";
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import style from './index.module.css';
 
 type Props = {
@@ -18,6 +18,7 @@ const Login: React.FC<Props> = ({ login, storage }) => {
     const [account, setAccount] = useState<LoginAccountModel>(null);
     const [loading, setLoading] = useState(false);
     const [messageError, setMessageError] = useState('');
+    const navigate = useNavigate();
 
     const generateAccount = (props: Partial<LoginAccountModel>) => {
         if (props?.email)
@@ -28,16 +29,26 @@ const Login: React.FC<Props> = ({ login, storage }) => {
     }
 
     const handleLogin = async () => {
+        setMessageError('');
+
         try {
             setLoading(true);
 
+            console.log('loading')
+
             const response = await login.auth(account);
+
+            console.log('response' + response)
 
             storage.set('token', response.token);
 
+            console.log('setou em cache')
+
             setLoading(false);
 
-            redirect('/home');
+            console.log('fechou loading')
+
+            navigate('/home');
         } catch (error) {
             setLoading(false);
 
@@ -66,7 +77,7 @@ const Login: React.FC<Props> = ({ login, storage }) => {
                             Criar conta
                         </Link>
 
-                        <button onClick={() => handleLogin()} className={style.login}>
+                        <button onClick={async () => await handleLogin()} className={style.login}>
                             Entrar
                         </button>
                     </div>
