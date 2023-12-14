@@ -5,7 +5,7 @@ import Truck from '@/presentation/assets/images/TruckMobile.png';
 import Loading from '@/presentation/components/loading';
 import MiddleBox from "@/presentation/components/middle-box";
 import { useState } from 'react';
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from './index.module.css';
 
 type Props = {
@@ -16,6 +16,7 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
     const [account, setAccount] = useState<CreateAccountModel>();
     const [messageError, setMessageError] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const generateAccount = (props: Partial<CreateAccountModel>) => {
         if (props?.email)
@@ -38,7 +39,7 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
 
             setLoading(false);
 
-            redirect('/');
+            navigate('/');
         } catch (error) {
             setLoading(false);
 
