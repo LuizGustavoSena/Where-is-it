@@ -1,3 +1,4 @@
+import { EnumRoutes } from '@/domain/enums';
 import { CreateAccountError } from '@/domain/error/create-account-error';
 import { CreateAccountModel } from '@/domain/models/create-account';
 import { AddAccount } from '@/domain/usecases';
@@ -39,7 +40,7 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
 
             setLoading(false);
 
-            navigate('/');
+            navigate(EnumRoutes.LOGIN);
         } catch (error) {
             setLoading(false);
 

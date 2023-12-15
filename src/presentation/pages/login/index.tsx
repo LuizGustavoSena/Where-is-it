@@ -1,5 +1,6 @@
 import { SetStorage } from '@/data/protocols/cache';
 import { RemoteLoginAccount } from '@/data/usecases/remote-login-account';
+import { EnumCache, EnumRoutes } from '@/domain/enums';
 import { LoginAccountError } from '@/domain/error/login-account-error';
 import { LoginAccountModel } from '@/domain/models/login-account';
 import Truck from '@/presentation/assets/images/TruckMobile.png';
@@ -34,21 +35,13 @@ const Login: React.FC<Props> = ({ login, storage }) => {
         try {
             setLoading(true);
 
-            console.log('loading')
-
             const response = await login.auth(account);
 
-            console.log('response' + response)
-
-            storage.set('token', response.token);
-
-            console.log('setou em cache')
+            storage.set(EnumCache.AUTH_CACHE, response.token);
 
             setLoading(false);
 
-            console.log('fechou loading')
-
-            navigate('/home');
+            navigate(EnumRoutes.HOME);
         } catch (error) {
             setLoading(false);
 

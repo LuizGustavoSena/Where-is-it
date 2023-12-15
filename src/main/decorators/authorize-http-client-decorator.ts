@@ -1,6 +1,6 @@
 import { GetStorage } from '@/data/protocols/cache'
 import { HttpClient, HttpRequest, HttpResponse } from '@/data/protocols/http'
-import { AUTH_CACHE } from '@/domain/consts'
+import { EnumCache } from '@/domain/enums'
 
 export class AuthorizeHttpClientDecorator implements HttpClient {
     constructor(
@@ -9,7 +9,7 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
     ) { }
 
     async request(data: HttpRequest): Promise<HttpResponse<any>> {
-        const account = this.getStorage.get(AUTH_CACHE)
+        const account = this.getStorage.get(EnumCache.AUTH_CACHE)
         if (account?.accessToken) {
             Object.assign(data, {
                 headers: Object.assign(data.headers || {}, {
