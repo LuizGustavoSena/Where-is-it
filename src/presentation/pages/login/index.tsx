@@ -66,7 +66,7 @@ const Login: React.FC<Props> = ({ login, storage }) => {
                     )}
 
                     <div className={style.buttons}>
-                        <Link to="createAccount" className={style.createAccount}>
+                        <Link to={EnumRoutes.CREATE_ACCOUNT} className={style.createAccount}>
                             Criar conta
                         </Link>
 
