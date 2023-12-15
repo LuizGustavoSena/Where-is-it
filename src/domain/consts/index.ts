@@ -1,1 +1,0 @@
-export const AUTH_CACHE = '@auth_cache_whereisit';
