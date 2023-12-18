@@ -1,6 +1,6 @@
 .containerTracking {
     width: 100%;
-    height: 70px;
+    height: auto;
     padding: 10px;
     box-sizing: border-box;
 
@@ -8,10 +8,57 @@
         width: 100%;
         height: 100%;
         border: 2px solid var(--second-color);
-        border-radius: 50px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         box-sizing: border-box;
         padding: 10px;
+        flex-direction: column;
+
+        .row {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            .options {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0px;
+
+                img {
+                    width: 10px;
+                }
+
+                .rotateImg {
+                    transform: rotate(3.142rad);
+                }
+
+                .lastInfo {
+                    margin-left: 10px;
+                    cursor: pointer;
+                }
+
+                .time {
+                    cursor: pointer;
+                }
+
+            }
+        }
+
+        .extraOptions {
+            display: flex;
+            align-items: end;
+            justify-content: end;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .time {
+            margin: 0px;
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
     }
 }
