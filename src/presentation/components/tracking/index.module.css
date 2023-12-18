@@ -1,0 +1,17 @@
+.containerTracking {
+    width: 100%;
+    height: 70px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .boxTracking {
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--second-color);
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+}
