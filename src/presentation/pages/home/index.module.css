@@ -10,5 +10,17 @@
         height: 90%;
         border-radius: 10px 10px 0px 0px;
         background-color: white;
+        display: flex;
+        flex-direction: row;
+
+        .left {
+            width: 50%;
+            height: 100%;
+        }
+
+        .right {
+            width: 50%;
+            height: 100%;
+        }
     }
 }
