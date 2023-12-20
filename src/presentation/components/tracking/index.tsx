@@ -1,8 +1,13 @@
+import { ZipcodeProps } from '@/domain/models/get-zipcodes';
 import ArrowDown from '@/presentation/assets/images/ArrowDown.png';
 import { useState } from 'react';
 import style from './index.module.css';
 
-const Tracking: React.FC = () => {
+type Props = {
+    data: ZipcodeProps[]
+};
+
+const Tracking: React.FC<Props> = ({ data }) => {
     const [openExtraOptions, setOpenExtraOptions] = useState(false);
 
     return (
