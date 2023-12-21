@@ -9,7 +9,11 @@ type Props = {
 };
 
 const Tracking: React.FC<Props> = ({ data }) => {
-    const [openExtraOptions, setOpenExtraOptions] = useState(false);
+    const [openExtraOptions, setOpenExtraOptions] = useState({});
+
+    const openCloseOptions = (code: string) => {
+        setOpenExtraOptions(el => ({ ...el, [`${code}`]: !openExtraOptions[code] }));
+    }
 
     return (
         <div className={style.containerTracking}>
@@ -19,9 +23,9 @@ const Tracking: React.FC<Props> = ({ data }) => {
             {data?.length > 0 && data.map(el => (
                 <div className={style.boxTracking} key={el.code}>
                     <div className={style.row}>
-                        <label className={style.title}>{el.code}</label>
-                        <button className={style.options} onClick={() => setOpenExtraOptions(el => !el)}>
-                            <img src={ArrowDown} className={openExtraOptions ? style.rotateImg : ''} alt='seta' />
+                        <label className={style.title}>{el.name}</label>
+                        <button className={style.options} onClick={() => openCloseOptions(el.code)}>
+                            <img src={ArrowDown} className={openExtraOptions[el.code] ? style.rotateImg : ''} alt='seta' />
                             <label className={style.lastInfo}>
                                 <label className={style.time}>{moment.utc(el.routes[0].date).format('DD/MM HH:mm')}</label>
                                 {el.routes[0].start && (`${el.routes[0].start} para ${el.routes[0].end}`)}
@@ -29,8 +33,8 @@ const Tracking: React.FC<Props> = ({ data }) => {
                             </label>
                         </button>
                     </div>
-                    {openExtraOptions && (
-                        <div className={style.extraOptions}>
+                    {openExtraOptions[el.code] && (
+                        <div className={style.extraOptions} key={el.code}>
                             {el.routes.map(route => (
                                 <label>
                                     <label className={style.time}>{moment.utc(route.date).format('DD/MM HH:mm')}</label>

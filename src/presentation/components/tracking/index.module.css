@@ -14,11 +14,15 @@
         box-sizing: border-box;
         padding: 10px;
         flex-direction: column;
+        margin-bottom: 10px;
 
         .row {
             display: flex;
             width: 100%;
-            justify-content: space-between;
+
+            .title {
+                width: 250px;
+            }
 
             .options {
                 background: transparent;
