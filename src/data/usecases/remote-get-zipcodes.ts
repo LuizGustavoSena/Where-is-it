@@ -19,6 +19,9 @@ export class RemoteGetZipcodes implements GetZipcodes {
         )
             throw new GetZipcodesError(response?.body);
 
+        if (response.statusCode === HttpStatusCode.NOCONTENT)
+            return { zipcodes: [] };
+
         return response.body;
     }
 }
