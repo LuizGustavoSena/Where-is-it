@@ -20,7 +20,7 @@ const Home: React.FC<Props> = ({ getZipcodes }) => {
             setmessageError('');
 
             try {
-                const response = await getZipcodes.getZipcode();
+                const response = await getZipcodes.execute();
 
                 setZipcodes(response.zipcodes);
             } catch (error) {
@@ -39,6 +39,7 @@ const Home: React.FC<Props> = ({ getZipcodes }) => {
             <div className={style.containerHome}>
                 <div className={style.boxHome}>
                     <div className={style.left}>
+                        {messageError.length > 0 && (<label>{messageError}</label>)}
                         <Tracking data={zipcodes} />
                     </div>
                     <div className={style.right}>

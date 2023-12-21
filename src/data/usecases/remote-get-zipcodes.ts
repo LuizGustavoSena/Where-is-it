@@ -8,7 +8,7 @@ export class RemoteGetZipcodes implements GetZipcodes {
         private httpClient: HttpClient
     ) { };
 
-    async getZipcode(): Promise<Zipcodes> {
+    async execute(): Promise<Zipcodes> {
         const response = await this.httpClient.request({
             method: 'get',
             url: `${import.meta.env.VITE_URL_API_ZIPCODE}/zipcode`,
