@@ -1,6 +1,6 @@
 import { RemoteGetZipcodes } from "@/data/usecases/remote-get-zipcodes";
-import { makeAxiosHttpClient } from "../http";
+import { makeAuthorizeHttpClient } from "../decorators/authorize-hhtp-client";
 
 export const makeRemoteGetZipcodes = (): RemoteGetZipcodes => new RemoteGetZipcodes(
-    makeAxiosHttpClient()
+    makeAuthorizeHttpClient()
 );

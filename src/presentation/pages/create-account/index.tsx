@@ -7,6 +7,7 @@ import Loading from '@/presentation/components/loading';
 import MiddleBox from "@/presentation/components/middle-box";
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import { ZodError, z } from 'zod';
 import style from './index.module.css';
 
 type Props = {
@@ -18,6 +19,12 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
     const [messageError, setMessageError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const validateForm = z.object({
+        email: z.string().email({ message: 'Email inválido' }),
+        password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' }),
+        username: z.string({ required_error: 'Username é necessário' })
+    });
 
     const generateAccount = (props: Partial<CreateAccountModel>) => {
         if (props?.email)
@@ -36,6 +43,8 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
         try {
             setLoading(true);
 
+            validateForm.parse(account);
+
             await addAccount.add(account);
 
             setLoading(false);
@@ -44,8 +53,12 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
         } catch (error) {
             setLoading(false);
 
-            setMessageError(error instanceof CreateAccountError ?
-                error.message : 'Erro inesperado');
+            let message = 'Erro inesperado';
+
+            if (error instanceof CreateAccountError || error instanceof ZodError)
+                message = error.message;
+
+            setMessageError(message);
         }
     };
 

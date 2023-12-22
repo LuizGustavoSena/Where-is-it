@@ -1,4 +1,5 @@
 import { GetZipcodesError } from "@/domain/error/get-zipcodes-error";
+import { UnauthorizedError } from "@/domain/error/unauthorized-error";
 import { Zipcodes } from "@/domain/models/get-zipcodes";
 import { GetZipcodes } from "@/domain/usecases/get-zipcodes";
 import { HttpClient, HttpStatusCode } from "../protocols/http";
@@ -15,9 +16,13 @@ export class RemoteGetZipcodes implements GetZipcodes {
         });
 
         if (!response ||
-            response.statusCode !== HttpStatusCode.Ok && response.statusCode !== HttpStatusCode.NOCONTENT
-        )
+            response.statusCode !== HttpStatusCode.Ok &&
+            response.statusCode !== HttpStatusCode.NOCONTENT &&
+            response.statusCode !== HttpStatusCode.Unauthorized)
             throw new GetZipcodesError(response?.body);
+
+        if (response.statusCode === HttpStatusCode.Unauthorized)
+            throw new UnauthorizedError();
 
         if (response.statusCode === HttpStatusCode.NOCONTENT)
             return { zipcodes: [] };
