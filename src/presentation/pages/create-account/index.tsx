@@ -23,7 +23,7 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
     const validateForm = z.object({
         email: z.string().email({ message: 'Email inválido' }),
         password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' }),
-        username: z.string({ required_error: 'Username é necessário' })
+        username: z.string({ required_error: 'Usuário é necessário' })
     });
 
     const generateAccount = (props: Partial<CreateAccountModel>) => {
@@ -51,12 +51,20 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
 
             navigate(EnumRoutes.LOGIN);
         } catch (error) {
+            if (!error || !error.message)
+                return;
+
             setLoading(false);
 
             let message = 'Erro inesperado';
 
-            if (error instanceof CreateAccountError || error instanceof ZodError)
+            if (error instanceof CreateAccountError)
                 message = error.message;
+
+            if (error instanceof ZodError) {
+                message = '';
+                error.issues.forEach(el => message += ` ${el.message}.`);
+            }
 
             setMessageError(message);
         }

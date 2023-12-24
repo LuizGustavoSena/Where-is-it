@@ -8,6 +8,7 @@ import Loading from '@/presentation/components/loading';
 import MiddleBox from '@/presentation/components/middle-box';
 import React, { memo, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { ZodError, z } from 'zod';
 import style from './index.module.css';
 
 type Props = {
@@ -20,6 +21,11 @@ const Login: React.FC<Props> = ({ login, storage }) => {
     const [loading, setLoading] = useState(false);
     const [messageError, setMessageError] = useState('');
     const navigate = useNavigate();
+
+    const validateLoginAccount = z.object({
+        email: z.string().email({ message: 'Email inválido' }),
+        password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' })
+    });
 
     const generateAccount = (props: Partial<LoginAccountModel>) => {
         if (props?.email)
@@ -35,6 +41,8 @@ const Login: React.FC<Props> = ({ login, storage }) => {
         try {
             setLoading(true);
 
+            validateLoginAccount.parse(account);
+
             const response = await login.auth(account);
 
             storage.set(EnumCache.AUTH_CACHE, response.token);
@@ -43,10 +51,22 @@ const Login: React.FC<Props> = ({ login, storage }) => {
 
             navigate(EnumRoutes.HOME);
         } catch (error) {
+            if (!error || !error.message)
+                return;
+
             setLoading(false);
 
-            setMessageError(error instanceof LoginAccountError ?
-                error.message : 'Erro inesperado');
+            let message = 'Erro inesperado';
+
+            if (error instanceof LoginAccountError)
+                message = error.message;
+
+            if (error instanceof ZodError) {
+                message = '';
+                error.issues.forEach(el => message += ` ${el.message}.`);
+            }
+
+            setMessageError(message);
         }
     }
 
