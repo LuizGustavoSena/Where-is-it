@@ -21,6 +21,31 @@
         .right {
             width: 50%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                font-size: 25px;
+            }
+
+            .subTitle {
+                margin-top: 10px;
+            }
+
+            input {
+                width: 150px;
+            }
+
+            button {
+                width: 70px;
+                margin-top: 20px;
+                color: white;
+                font-size: 15px;
+                padding: 10px;
+                background-color: var(--primary-color);
+                cursor: pointer;
+                border-radius: 10px;
+            }
         }
     }
 }
