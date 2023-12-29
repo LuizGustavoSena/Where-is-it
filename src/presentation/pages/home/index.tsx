@@ -31,6 +31,8 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
             if (error instanceof UnauthorizedError)
                 navigate(EnumRoutes.LOGIN);
 
+            setZipcodes(null);
+
             setmessageError(error.message);
         }
     }
@@ -61,8 +63,11 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
 
             setTimeout(async () => {
                 await loadZipcodes();
+
+                setValuesForm(null);
+
                 setLoading(false);
-            }, 2000);
+            }, 3000);
         } catch (error) {
             setLoading(false);
 
@@ -82,10 +87,18 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
                     <div className={style.right}>
                         <label className={style.title}>Inserir novo rastreamento</label>
                         <label className={style.subTitle}>Nome:</label>
-                        <input type="text" onChange={e => generateZipcode({ name: e.target.value })} />
+                        <input
+                            type="text"
+                            onChange={e => generateZipcode({ name: e.target.value })}
+                            value={valuesForm?.name || ''}
+                        />
 
                         <label className={style.subTitle}>Código:</label>
-                        <input type="text" onChange={e => generateZipcode({ zipcode: e.target.value })} />
+                        <input
+                            type="text"
+                            onChange={e => generateZipcode({ zipcode: e.target.value })}
+                            value={valuesForm?.zipcode || ''}
+                        />
 
                         <button onClick={async () => await handleCreateZipcode()}>Criar</button>
                     </div>
