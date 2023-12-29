@@ -22,7 +22,7 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
     const [zipcodes, setZipcodes] = useState<ZipcodeProps[]>(null);
     const navigate = useNavigate();
 
-    const loadgZipcodes = async () => {
+    const loadZipcodes = async () => {
         try {
             const response = await getZipcodes.execute();
 
@@ -36,16 +36,13 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
     }
 
     useEffect(() => {
-        async function loadZipcodes() {
-            setLoading(true);
-            setmessageError('');
+        setmessageError('');
 
-
-
-            setLoading(false);
-        };
+        setLoading(true);
 
         loadZipcodes();
+
+        setLoading(false);
     }, []);
 
     const generateZipcode = (params: Partial<CreateZipcodeModel>) => {
@@ -57,10 +54,18 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
     }
 
     const handleCreateZipcode = async () => {
+        setLoading(true);
+
         try {
             await createZipcode.execute(valuesForm);
 
+            setTimeout(async () => {
+                await loadZipcodes();
+                setLoading(false);
+            }, 2000);
         } catch (error) {
+            setLoading(false);
+
             setmessageError(error.message);
         }
     }
@@ -82,7 +87,7 @@ const Home: React.FC<Props> = ({ getZipcodes, createZipcode }) => {
                         <label className={style.subTitle}>Código:</label>
                         <input type="text" onChange={e => generateZipcode({ zipcode: e.target.value })} />
 
-                        <button onClick={() => handleCreateZipcode()}>Criar</button>
+                        <button onClick={async () => await handleCreateZipcode()}>Criar</button>
                     </div>
                 </div>
             </div>
