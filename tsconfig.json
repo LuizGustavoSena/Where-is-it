@@ -28,9 +28,6 @@
     "paths": {
       "@/*": [
         "*"
-      ],
-      "@/tests/*": [
-        "../tests/*"
       ]
     },
     "strict": false,
