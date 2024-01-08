@@ -29,5 +29,7 @@ describe('RemoteAddAccount', () => {
         sut.add(request);
 
         expect(httpClientSpy.body).toEqual(request);
+        expect(httpClientSpy.method).toBe('post');
+        expect(httpClientSpy.url).toBe(`${import.meta.env.VITE_URL_API_AUTHENTICATION}/create_account`);
     })
 })
