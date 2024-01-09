@@ -21,7 +21,7 @@ const makeSut = (): Props => {
     }
 };
 
-describe('RemoteCreateZipcode', () => {
+describe('RemoteGetZipcodes', () => {
     it('Should correct values', async () => {
         const { sut, httpClientSpy } = makeSut();
 
