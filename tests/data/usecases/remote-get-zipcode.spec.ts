@@ -1,5 +1,6 @@
 import { HttpStatusCode } from "@/data/protocols/http";
 import { RemoteGetZipcodes } from "@/data/usecases/remote-get-zipcodes";
+import { GetZipcodesError } from "@/domain/error/get-zipcodes-error";
 import { describe, expect, it } from "vitest";
 import { mockResponseGetZipcodes } from "../../domain/mocks/mock-zipcode";
 import { HttpClientSpy } from "../mocks";
@@ -42,5 +43,13 @@ describe('RemoteCreateZipcode', () => {
         const response = await sut.execute();
 
         expect(response).toEqual({ zipcodes: [] });
+    });
+
+    it('Should correct response if throw unexpected error', async () => {
+        const { sut, httpClientSpy } = makeSut();
+
+        httpClientSpy.response.statusCode = HttpStatusCode.ServerError;
+
+        await expect(sut.execute()).rejects.toThrow(GetZipcodesError);
     });
 });
