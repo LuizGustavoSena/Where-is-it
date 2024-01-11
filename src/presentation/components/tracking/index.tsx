@@ -18,7 +18,7 @@ const Tracking: React.FC<Props> = ({ data }) => {
     return (
         <div className={style.containerTracking}>
             {data?.length === 0 && (
-                <label>Você não possui rastreamentos</label>
+                <label data-testid="labelNoContent">Você não possui rastreamentos</label>
             )}
             {data?.length > 0 && data.map(el => (
                 <div className={style.boxTracking} key={el.code}>

@@ -1,6 +1,6 @@
 import faker from "faker";
 import { CreateZipcodeModel } from "../models/create-zipcodes";
-import { Zipcodes } from "../models/get-zipcodes";
+import { ZipcodeProps, Zipcodes } from "../models/get-zipcodes";
 
 export const mockRequestCreateZipcode = (): CreateZipcodeModel => {
     return {
@@ -27,4 +27,11 @@ export const mockResponseGetZipcodes = (): Zipcodes => {
             }
         ]
     }
+};
+
+export const mockItemZipcodes = (): ZipcodeProps[] => {
+    return [
+        mockResponseGetZipcodes().zipcodes[0],
+        mockResponseGetZipcodes().zipcodes[0]
+    ]
 };
