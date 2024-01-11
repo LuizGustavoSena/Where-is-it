@@ -1,5 +1,6 @@
 import { HttpStatusCode } from "@/data/protocols/http";
 import { RemoteLoginAccount } from "@/data/usecases/remote-login-account";
+import { LoginAccountError } from "@/domain/error/login-account-error";
 import { describe, expect, it } from "vitest";
 import { mockRequestLoginAccount, mockResponseLoginAccount } from "../../domain/mocks/mock-account";
 import { HttpClientSpy } from "../mocks";
@@ -36,5 +37,15 @@ describe('RemoteLoginAccount', () => {
         expect(httpClientSpy.method).toBe('post');
         expect(httpClientSpy.url).toBe(`${import.meta.env.VITE_URL_API_AUTHENTICATION}/login_account`);
         expect(response).toEqual(responseMock);
+    });
+
+    it('Should correct error if statusCode differents 201', async () => {
+        const { sut, httpClientSpy } = makeSut();
+
+        httpClientSpy.response.statusCode = HttpStatusCode.ServerError;
+
+        const request = mockRequestLoginAccount();
+
+        await expect(sut.auth(request)).rejects.toThrow(LoginAccountError);
     });
 });
