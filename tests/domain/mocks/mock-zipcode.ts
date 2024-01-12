@@ -17,7 +17,7 @@ export const mockResponseGetZipcodes = (): Zipcodes => {
                 name: faker.random.words(),
                 routes: [
                     {
-                        date: faker.date.recent().toString(),
+                        date: faker.date.recent().toISOString(),
                         description: faker.datatype.string(),
                         end: faker.address.cityName(),
                         start: faker.address.cityName()
