@@ -23,13 +23,13 @@ const Tracking: React.FC<Props> = ({ data }) => {
             {data?.length > 0 && data.map(el => (
                 <div className={style.boxTracking} key={el.code}>
                     <div className={style.row}>
-                        <label className={style.title}>{el.name}</label>
+                        <label className={style.title} data-testid="name">{el.name}</label>
                         <button className={style.options} onClick={() => openCloseOptions(el.code)}>
                             <img src={ArrowDown} className={openExtraOptions[el.code] ? style.rotateImg : ''} alt='seta' />
                             <label className={style.lastInfo}>
-                                <label className={style.time}>{moment.utc(el.routes[0].date).format('DD/MM HH:mm')}</label>
-                                {el.routes[0].start && (`${el.routes[0].start} para ${el.routes[0].end}`)}
-                                {!el.routes[0].start && (`${el.routes[0].description}`)}
+                                <label className={style.time} data-testid="date">{moment.utc(el.routes[0].date).format('DD/MM HH:mm')}</label>
+                                <label data-testid="route">{el.routes[0].start ? (`${el.routes[0].start} para ${el.routes[0].end}`)
+                                    : (`${el.routes[0].description}`)}</label>
                             </label>
                         </button>
                     </div>

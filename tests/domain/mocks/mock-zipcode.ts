@@ -31,7 +31,6 @@ export const mockResponseGetZipcodes = (): Zipcodes => {
 
 export const mockItemZipcodes = (): ZipcodeProps[] => {
     return [
-        mockResponseGetZipcodes().zipcodes[0],
         mockResponseGetZipcodes().zipcodes[0]
     ]
 };
