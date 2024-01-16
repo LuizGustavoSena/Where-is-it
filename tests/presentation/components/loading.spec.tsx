@@ -1,14 +1,23 @@
 import Loading from "@/presentation/components/loading";
 import { render } from "@testing-library/react";
+import faker from "faker";
 import { describe, expect, it } from "vitest";
 
-const makeSut = (show: boolean = false) => {
-    return render(<Loading show={show} />);
+type Props = {
+    show?: boolean;
+    message?: string;
+}
+const makeSut = (params?: Props) => {
+    console.log({ params })
+    return render(<Loading
+        show={params?.show}
+        message={params?.message}
+    />);
 };
 
 describe('Loading', () => {
     it('Should correct loading if show is true', () => {
-        const { getByTestId } = makeSut(true);
+        const { getByTestId } = makeSut({ show: true });
 
         const message = getByTestId('messageLoad').textContent;
 
@@ -26,5 +35,14 @@ describe('Loading', () => {
         }
 
         expect(message).toBeNull();
+    });
+
+    it('Should correct message loading if message parans exist', () => {
+        const message = faker.random.words();
+        const { getByTestId } = makeSut({ show: true, message });
+
+        const messageTitle = getByTestId('messageLoad').textContent;
+
+        expect(messageTitle).toBe(message);
     });
 })
