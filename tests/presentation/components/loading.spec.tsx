@@ -8,8 +8,23 @@ const makeSut = (show: boolean = false) => {
 
 describe('Loading', () => {
     it('Should correct loading if show is true', () => {
-        const component = makeSut(true);
+        const { getByTestId } = makeSut(true);
 
-        expect(component).toBeTruthy();
+        const message = getByTestId('messageLoad').textContent;
+
+        expect(message).toBe('Carregando...');
+    });
+
+    it('Should correct loading if show is false', () => {
+        const { getByTestId } = makeSut();
+        let message: string;
+
+        try {
+            message = getByTestId('messageLoad').textContent;
+        } catch (error) {
+            message = null;
+        }
+
+        expect(message).toBeNull();
     });
 })
