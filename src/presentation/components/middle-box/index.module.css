@@ -14,9 +14,9 @@
         transform: translate(-50%, -50%);
         border-radius: 20px;
 
-        background: -webkit-linear-gradient(right, white 50%, var(--primary-color) 50%);
-        background: -o-linear-gradient(right, white 50%, var(--primary-color) 50%);
-        background: -moz-linear-gradient(right, white 50%, var(--primary-color) 50%);
-        background: linear-gradient(to right, white 50%, var(--primary-color) 50%);
+        background: -webkit-linear-gradient(right, white 50%, #5D6A90 50%);
+        background: -o-linear-gradient(right, white 50%, #5D6A90 50%);
+        background: -moz-linear-gradient(right, white 50%, #5D6A90 50%);
+        background: linear-gradient(to right, white 50%, #5D6A90 50%);
     }
 }
