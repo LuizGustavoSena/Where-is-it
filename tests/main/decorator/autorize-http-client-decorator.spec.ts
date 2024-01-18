@@ -1,10 +1,10 @@
 import { HttpRequest } from '@/data/protocols/http';
+import { EnumCache } from '@/domain/enums';
 import { AuthorizeHttpClientDecorator } from '@/main/decorators';
-import { HttpClientSpy, mockRequest } from '@/tests/data/mocks';
-import { GetStorageSpy } from '@/tests/data/mocks/mock-cache';
-import { mockAccountModel } from '@/tests/domain/mocks/mock-account';
 import * as faker from 'faker';
 import { describe, expect, test } from 'vitest';
+import { GetStorageSpy, HttpClientSpy, mockRequest } from '../../data/mocks';
+import { mockAccountModel } from '../../domain/mocks/mock-account';
 
 type SutTypes = {
     sut: AuthorizeHttpClientDecorator
@@ -29,7 +29,7 @@ describe('AuthorizeHttpGetClientDecorator', () => {
 
         await sut.request(mockRequest())
 
-        expect(getStorageSpy.key).toBe('account')
+        expect(getStorageSpy.key).toBe(EnumCache.AUTH_CACHE)
     })
 
     test('Should not add headers if GetStorage is invalid', async () => {
@@ -62,7 +62,7 @@ describe('AuthorizeHttpGetClientDecorator', () => {
         expect(httpClientSpy.url).toBe(httpRequest.url)
         expect(httpClientSpy.method).toBe(httpRequest.method)
         expect(httpClientSpy.headers).toEqual({
-            'x-access-token': getStorageSpy.value.accessToken
+            'Authorization': getStorageSpy.value.token
         })
     })
 
@@ -84,7 +84,7 @@ describe('AuthorizeHttpGetClientDecorator', () => {
         expect(httpClientSpy.method).toBe(httpRequest.method)
         expect(httpClientSpy.headers).toEqual({
             field,
-            'x-access-token': getStorageSpy.value.accessToken
+            'Authorization': getStorageSpy.value.token
         })
     })
 
