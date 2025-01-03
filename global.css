@@ -1,13 +1,10 @@
 :root {
-    --primary-color: #5D6A90;
+    --primary-color: #020625;
     --second-color: #7BCEA6;
 }
 
 body {
     margin: 0px;
     padding: 0px;
-    background: -webkit-linear-gradient(right, var(--primary-color) 50%, var(--second-color) 50%);
-    background: -o-linear-gradient(right, var(--primary-color) 50%, var(--second-color) 50%);
-    background: -moz-linear-gradient(right, var(--primary-color) 50%, var(--second-color) 50%);
-    background: linear-gradient(to right, var(--primary-color) 50%, var(--second-color) 50%);
+    background-color: #e4e4e5;
 }

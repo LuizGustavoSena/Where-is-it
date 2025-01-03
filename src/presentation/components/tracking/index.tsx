@@ -18,28 +18,29 @@ const Tracking: React.FC<Props> = ({ data }) => {
     return (
         <div className={style.containerTracking}>
             {data?.length === 0 && (
-                <label>Você não possui rastreamentos</label>
+                <label data-testid="labelNoContent">Você não possui rastreamentos</label>
             )}
             {data?.length > 0 && data.map(el => (
                 <div className={style.boxTracking} key={el.code}>
                     <div className={style.row}>
-                        <label className={style.title}>{el.name}</label>
-                        <button className={style.options} onClick={() => openCloseOptions(el.code)}>
+                        <label className={style.title} data-testid="name">{el.name}</label>
+                        <button className={style.options} onClick={() => openCloseOptions(el.code)} data-testid="onPressExtraOptions">
                             <img src={ArrowDown} className={openExtraOptions[el.code] ? style.rotateImg : ''} alt='seta' />
                             <label className={style.lastInfo}>
-                                <label className={style.time}>{moment.utc(el.routes[0].date).format('DD/MM HH:mm')}</label>
-                                {el.routes[0].start && (`${el.routes[0].start} para ${el.routes[0].end}`)}
-                                {!el.routes[0].start && (`${el.routes[0].description}`)}
+                                <label className={style.time} data-testid="date">{moment.utc(el.routes[0].date).format('DD/MM HH:mm')}</label>
+                                <label data-testid="route">{el.routes[0].start ? (`${el.routes[0].start} para ${el.routes[0].end}`)
+                                    : (`${el.routes[0].description}`)}</label>
                             </label>
                         </button>
                     </div>
                     {openExtraOptions[el.code] && (
                         <div className={style.extraOptions} key={el.code}>
                             {el.routes.map(route => (
-                                <label>
-                                    <label className={style.time}>{moment.utc(route.date).format('DD/MM HH:mm')}</label>
-                                    {route.start && (`${route.start} para ${route.end}`)}
-                                    {!route.start && (`${route.description}`)}
+                                <label key={route.description}>
+                                    <label className={style.time} data-testid="dateExtraOptions">{moment.utc(route.date).format('DD/MM HH:mm')}</label>
+                                    <label data-testid="routeExtraOptions">{route.start ? (`${route.start} para ${route.end}`)
+                                        : (`${route.description}`)}
+                                    </label>
                                 </label>
                             ))}
                         </div>
