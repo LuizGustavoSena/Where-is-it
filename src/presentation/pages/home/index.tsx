@@ -6,7 +6,6 @@ import { CreateZipcodeModel } from "@/domain/models/create-zipcodes";
 import { ZipcodeProps } from "@/domain/models/get-zipcodes";
 import { GetTrackingZipcode } from "@/domain/usecases/get-tracking-zipcode";
 import Loading from "@/presentation/components/loading";
-import Tracking from "@/presentation/components/tracking";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from './index.module.css';
@@ -81,29 +80,36 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode 
         <>
             <Loading show={loading} />
             <div className={style.containerHome}>
+                <div className={style.containerCreate}>
+                    <label className={style.title}>Localize a sua encomenda</label>
+                    <label>Por favor crie um nome e insira o código de sua encomenda</label>
+                    <div className={style.containerInputs}>
+                        <input
+                            className={style.input}
+                            type="text"
+                            placeholder="Apelido para o pacote"
+                            onChange={e => generateZipcode({ name: e.target.value })}
+                            value={valuesForm?.name || ''}
+                        />
+                        <input
+                            className={style.input}
+                            type="text"
+                            placeholder="Código do pacote"
+                            onChange={e => generateZipcode({ code: e.target.value })}
+                            value={valuesForm?.code || ''}
+                        />
+                        <button className={style.button} onClick={async () => await handleCreateZipcode()}>Pesquisar</button>
+                    </div>
+                </div>
                 <div className={style.boxHome}>
-                    <div className={style.left}>
+
+                    {/* <div className={style.left}>
                         {messageError.length > 0 && (<label>{messageError}</label>)}
                         <Tracking data={zipcodes} getTrackingZipcode={getTrackingZipcode} />
                     </div>
                     <div className={style.right}>
-                        <label className={style.title}>Inserir novo rastreamento</label>
-                        <label className={style.subTitle}>Nome:</label>
-                        <input
-                            type="text"
-                            onChange={e => generateZipcode({ name: e.target.value })}
-                            value={valuesForm?.name || ''}
-                        />
 
-                        <label className={style.subTitle}>Código:</label>
-                        <input
-                            type="text"
-                            onChange={e => generateZipcode({ code: e.target.value })}
-                            value={valuesForm?.code || ''}
-                        />
-
-                        <button onClick={async () => await handleCreateZipcode()}>Criar</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

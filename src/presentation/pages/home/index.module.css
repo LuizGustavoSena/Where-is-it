@@ -2,50 +2,67 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: end;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+}
 
-    .boxHome {
-        width: 90%;
-        height: 90%;
-        border-radius: 10px 10px 0px 0px;
-        background-color: white;
-        display: flex;
-        flex-direction: row;
+.containerCreate {
+    background-color: #DAE3FF;
+    padding: 30px;
+    border-radius: 10px;
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .left {
-            width: 50%;
-            height: 100%;
-        }
+.title {
+    font-size: 25px;
+}
 
-        .right {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+.input {
+    background: #F8F8F8;
+    border: none;
+    padding: 10px;
+    width: 150px;
+    border-radius: 7px;
+}
 
-            .title {
-                font-size: 25px;
-            }
+.containerInputs {
+    width: 600px;
+    height: 40px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
 
-            .subTitle {
-                margin-top: 10px;
-            }
+.boxHome {
+    width: 1000px;
+    height: 1000px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+}
 
-            input {
-                width: 150px;
-            }
+.left {
+    width: 50%;
+    height: 100%;
+}
 
-            button {
-                width: 70px;
-                margin-top: 20px;
-                color: white;
-                font-size: 15px;
-                padding: 10px;
-                background-color: #5D6A90;
-                cursor: pointer;
-                border-radius: 10px;
-            }
-        }
-    }
+.right {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    color: white;
+    font-size: 15px;
+    padding: 0px 20px;
+    background-color: #0B5CF3;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
 }
