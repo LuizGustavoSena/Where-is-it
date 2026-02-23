@@ -32,6 +32,8 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
 
     const loadZipcodes = async () => {
         try {
+            setLoading(true);
+
             const response = await getZipcodes.execute();
 
             setZipcodes(response.zipcodes);
@@ -41,15 +43,14 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
             await getRoutes({
                 code: response.zipcodes[0]?.code,
                 index: 0
-            })
-
+            });
         } catch (error) {
             if (error instanceof UnauthorizedError)
                 navigate(EnumRoutes.LOGIN);
 
-            setZipcodes(null);
-
             setmessageError(error.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -81,18 +82,18 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                 setValuesForm(null);
 
                 setZipcodes(prev => [...prev, { ...valuesForm, id: '' }]);
-
-                setLoading(false);
             });
         } catch (error) {
-            setLoading(false);
-
             setmessageError(error.message);
+        } finally {
+            setLoading(false);
         }
     }
 
     const getRoutes = async ({ code, index }: getRoutesParams) => {
         try {
+            setLoading(true);
+
             setRoutes(null);
 
             setzipcodeIndex(index);
@@ -105,6 +106,8 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                 navigate(EnumRoutes.LOGIN);
 
             setmessageError(error.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -155,7 +158,9 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                             onChange={e => generateZipcode({ code: e.target.value })}
                             value={valuesForm?.code || ''}
                         />
-                        <button className={style.buttonSearch} onClick={async () => await handleCreateZipcode()}>Pesquisar</button>
+                        <button className={style.buttonSearch} onClick={async () => await handleCreateZipcode()}>
+                            Pesquisar
+                        </button>
                     </div>
                 </div>
                 <div className={style.boxHome}>
@@ -174,7 +179,7 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                     <div className={style.right}>
                         <div className={style.title}>Histórico de rota da sua encomenda</div>
                         <div className={style.containerTracking}>
-                            <div className={style.start}>{routes?.code ? 'Código de rastreamento<' : ''}</div>
+                            <div className={style.start}>{routes?.code ? 'Código de rastreamento' : ''}</div>
                             <div className={style.title}>{routes?.code}</div>
                             {routes?.routes && routes.routes.map((route, index) => (
                                 <div key={index} className={style.trackBox}>
