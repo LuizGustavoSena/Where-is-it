@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 100px;
+    padding: 50px 0px;
 }
 
 .containerCreate {
@@ -14,10 +14,11 @@
     width: 1200px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .title {
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .input {
@@ -37,9 +38,11 @@
 }
 
 .boxHome {
-    width: 1000px;
-    height: 1000px;
-    border-radius: 10px 10px 0px 0px;
+    box-sizing: border-box;
+    width: 1200px;
+    margin-top: 40px;
+    height: 930px;
+    border-radius: 10px;
     background-color: white;
     display: flex;
     flex-direction: row;
@@ -48,6 +51,7 @@
 .left {
     width: 50%;
     height: 100%;
+    box-sizing: border-box;
 }
 
 .right {
@@ -55,14 +59,62 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #DAE3FF;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
-.button {
+.buttonSearch {
     color: white;
     font-size: 15px;
     padding: 0px 20px;
     background-color: #0B5CF3;
     cursor: pointer;
     border-radius: 5px;
+    border: none;
+}
+
+.nameZipcode {
+    padding: 30px 30px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    overflow-y: auto;
+}
+
+.houverZipcode {
+    background-color: #DAE3FF;
+}
+
+.containerTracking {
+    background: #F8F8F8;
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.trackBox {
+    padding: 20px;
+}
+
+.description {
+    font-weight: 600;
+}
+
+.start {
+    font-size: 14px;
+}
+
+.end {
+    color: black;
+}
+
+.button {
+    background: transparent;
+    cursor: pointer;
     border: none;
 }

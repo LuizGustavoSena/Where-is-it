@@ -3,9 +3,9 @@ export type Zipcodes = {
 }
 
 export type ZipcodeProps = {
+    id: string;
     name: string;
     code: string;
-    status: string;
 }
 
 export type RouteProps = {
