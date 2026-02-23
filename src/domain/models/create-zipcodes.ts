@@ -1,4 +1,4 @@
 export type CreateZipcodeModel = {
     name: string;
-    zipcode: string;
+    code: string;
 }

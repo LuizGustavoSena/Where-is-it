@@ -6,7 +6,6 @@ export type ZipcodeProps = {
     name: string;
     code: string;
     status: string;
-    routes: RouteProps[];
 }
 
 export type RouteProps = {

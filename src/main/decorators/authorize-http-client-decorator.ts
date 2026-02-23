@@ -14,7 +14,7 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
         if (accessToken) {
             Object.assign(data, {
                 headers: Object.assign(data.headers || {}, {
-                    'Authorization': accessToken.token
+                    'authorization': `Bearer ${accessToken}`
                 })
             })
         }
