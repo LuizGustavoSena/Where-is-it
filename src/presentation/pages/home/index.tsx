@@ -1,9 +1,10 @@
 import { RemoteCreateZipcode } from "@/data/usecases/remote-create-zipcode";
+import { RemoteDeleteZipcode } from "@/data/usecases/remote-delete-zipcodes";
 import { RemoteGetZipcodes } from "@/data/usecases/remote-get-zipcodes";
 import { EnumRoutes } from "@/domain/enums";
 import { UnauthorizedError } from "@/domain/error/unauthorized-error";
 import { CreateZipcodeModel } from "@/domain/models/create-zipcodes";
-import { getRoutesParams, TrackingZipcode } from "@/domain/models/get-tracking-zipcodes";
+import { deleteZipcode, getRoutesParams, TrackingZipcode } from "@/domain/models/get-tracking-zipcodes";
 import { ZipcodeProps } from "@/domain/models/get-zipcodes";
 import { GetTrackingZipcode } from "@/domain/usecases/get-tracking-zipcode";
 import Trash from '@/presentation/assets/images/trash.png';
@@ -14,13 +15,14 @@ import style from './index.module.css';
 
 type Props = {
     getZipcodes: RemoteGetZipcodes;
+    deleteZipcode: RemoteDeleteZipcode;
     getTrackingZipcode: GetTrackingZipcode;
     createZipcode: RemoteCreateZipcode;
 };
 
-const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode }) => {
+const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode, deleteZipcode }) => {
     const [loading, setLoading] = useState(false);
-    const [zipcodeIndex, setzipcodeIndex] = useState(0);
+    const [zipcodeIndex, setzipcodeIndex] = useState<number>();
     const [routes, setRoutes] = useState<TrackingZipcode>();
     const [messageError, setmessageError] = useState('');
     const [valuesForm, setValuesForm] = useState<CreateZipcodeModel>(null);
@@ -78,10 +80,10 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode 
             setTimeout(async () => {
                 setValuesForm(null);
 
-                setZipcodes(prev => [...prev, { ...valuesForm, id: '' }])
+                setZipcodes(prev => [...prev, { ...valuesForm, id: '' }]);
 
                 setLoading(false);
-            }, 3000);
+            });
         } catch (error) {
             setLoading(false);
 
@@ -103,6 +105,31 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode 
                 navigate(EnumRoutes.LOGIN);
 
             setmessageError(error.message);
+        }
+    }
+
+    const deleteZipcodeBycode = async ({ code, index }: deleteZipcode) => {
+        try {
+            setLoading(true);
+
+            if (index === zipcodeIndex) {
+                setRoutes(null);
+                setzipcodeIndex(index);
+            }
+
+            if (zipcodes.length === 1)
+                setzipcodeIndex(null);
+
+            await deleteZipcode.execute(code);
+
+            setZipcodes(prev => prev.filter((_, i) => i !== index));
+        } catch (error) {
+            if (error instanceof UnauthorizedError)
+                navigate(EnumRoutes.LOGIN);
+
+            setmessageError(error.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -138,7 +165,7 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode 
                                 <button className={style.button} onClick={async () => await getRoutes({ code: zipcode.code, index })}>
                                     {zipcode.name}
                                 </button>
-                                <button className={style.button}>
+                                <button className={style.button} onClick={async () => await deleteZipcodeBycode({ code: zipcode.code, index })}>
                                     <img src={Trash} alt="Trash" />
                                 </button>
                             </div>

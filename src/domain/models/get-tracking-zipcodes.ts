@@ -13,3 +13,5 @@ export type getRoutesParams = {
     code: string;
     index: number;
 }
+
+export type deleteZipcode = getRoutesParams;
