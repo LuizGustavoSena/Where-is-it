@@ -8,3 +8,8 @@ export type TrackingZipcode = {
 export type TrackingZipcodeProps = {
     trackingRoute: TrackingZipcode;
 }
+
+export type getRoutesParams = {
+    code: string;
+    index: number;
+}

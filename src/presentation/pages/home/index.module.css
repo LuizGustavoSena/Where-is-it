@@ -98,7 +98,7 @@
 }
 
 .trackBox {
-    padding: 20px;
+    padding: 10px;
 }
 
 .description {
@@ -109,8 +109,8 @@
     font-size: 14px;
 }
 
-.end {
-    color: black;
+.date {
+    font-size: 12px;
 }
 
 .button {
