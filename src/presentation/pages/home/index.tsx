@@ -1,12 +1,14 @@
 import { RemoteCreateZipcode } from "@/data/usecases/remote-create-zipcode";
 import { RemoteDeleteZipcode } from "@/data/usecases/remote-delete-zipcodes";
 import { RemoteGetZipcodes } from "@/data/usecases/remote-get-zipcodes";
-import { EnumRoutes } from "@/domain/enums";
+import { EnumCache, EnumRoutes } from "@/domain/enums";
 import { UnauthorizedError } from "@/domain/error/unauthorized-error";
 import { CreateZipcodeModel } from "@/domain/models/create-zipcodes";
 import { deleteZipcode, getRoutesParams, TrackingZipcode } from "@/domain/models/get-tracking-zipcodes";
 import { ZipcodeProps } from "@/domain/models/get-zipcodes";
 import { GetTrackingZipcode } from "@/domain/usecases/get-tracking-zipcode";
+import { makeLocalStorageAdapter } from "@/main/factories/cache/local-storage-cache";
+import LogoutIcon from '@/presentation/assets/images/logout.png';
 import Trash from '@/presentation/assets/images/trash.png';
 import Loading from "@/presentation/components/loading";
 import React, { useEffect, useState } from "react";
@@ -136,12 +138,23 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
         }
     }
 
+    const Logout = async () => {
+        makeLocalStorageAdapter().set(EnumCache.AUTH_CACHE, undefined);
+        navigate(EnumRoutes.LOGIN);
+    }
+
     return (
         <>
             <Loading show={loading} />
             <div className={style.containerHome}>
                 <div className={style.containerCreate}>
-                    <div className={style.title}>Localize a sua encomenda</div>
+                    <div className={style.containerLogout}>
+                        <div className={style.title}>Localize a sua encomenda</div>
+                        <button className={`${style.button} ${style.logoutButton}`} onClick={async () => await Logout()}>
+                            Sair
+                            <img src={LogoutIcon} alt="Trash" />
+                        </button>
+                    </div>
                     <div>Por favor crie um nome e insira o código de sua encomenda</div>
                     <div className={style.containerInputs}>
                         <input

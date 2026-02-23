@@ -12,7 +12,7 @@ const Loading: React.FC<Props> = (props) => {
             {props.show && (
                 <div className={style.blackBox}>
                     <div className={style.boxLoading}>
-                        <img src={Truck} />
+                        <img src={Truck} title='Loading' />
                         <label data-testid="messageLoad">{props?.message || 'Carregando...'}</label>
                     </div>
                 </div>

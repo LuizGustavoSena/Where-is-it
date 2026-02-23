@@ -17,6 +17,19 @@
     box-sizing: border-box;
 }
 
+.containerLogout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    width: 60px;
+    justify-content: space-between;
+}
+
 .title {
     font-size: 22px;
 }
