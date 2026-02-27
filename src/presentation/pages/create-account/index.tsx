@@ -2,10 +2,15 @@ import { EnumRoutes } from '@/domain/enums';
 import { CreateAccountError } from '@/domain/error/create-account-error';
 import { CreateAccountModel } from '@/domain/models/create-account';
 import { AddAccount } from '@/domain/usecases';
-import Truck from '@/presentation/assets/images/TruckMobile.png';
+import AddUser from '@/presentation/assets/images/add-user.png';
+import Main from '@/presentation/assets/images/mail.png';
+import Padlock from '@/presentation/assets/images/padlock.png';
+import User from '@/presentation/assets/images/user.png';
+import { Input } from '@/presentation/components/input';
 import Loading from '@/presentation/components/loading';
-import MiddleBox from "@/presentation/components/middle-box";
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from "react-router-dom";
 import { ZodError, z } from 'zod';
 import style from './index.module.css';
@@ -14,38 +19,26 @@ type Props = {
     addAccount: AddAccount;
 };
 
+const validateForm = z.object({
+    email: z.email({ message: 'Email inválido' }),
+    password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' }),
+    username: z.string().min(4, { message: 'Senha precisa ter no mínimo 4 caracteres' })
+});
+
 const CreateAccount: React.FC<Props> = ({ addAccount }) => {
-    const [account, setAccount] = useState<CreateAccountModel>();
-    const [messageError, setMessageError] = useState('');
     const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
-    const validateForm = z.object({
-        email: z.string().email({ message: 'Email inválido' }),
-        password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' }),
-        username: z.string({ required_error: 'Usuário é necessário' })
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm<CreateAccountModel>(
+        { resolver: zodResolver(validateForm) }
+    );
 
-    const generateAccount = (props: Partial<CreateAccountModel>) => {
-        if (props?.email)
-            setAccount(el => ({ ...el, email: props.email }));
-
-        if (props?.password)
-            setAccount(el => ({ ...el, password: props.password }));
-
-        if (props?.username)
-            setAccount(el => ({ ...el, username: props.username }));
-    };
-
-    const handleCreateAccount = async () => {
-        setMessageError('');
-
+    const handleCreateAccount: SubmitHandler<CreateAccountModel> = async (data) => {
         try {
             setLoading(true);
 
-            validateForm.parse(account);
-
-            await addAccount.add(account);
+            await addAccount.add(data);
 
             setLoading(false);
 
@@ -65,47 +58,54 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
                 message = '';
                 error.issues.forEach(el => message += ` ${el.message}.`);
             }
-
-            setMessageError(message);
         }
     };
 
     return (
         <>
-            <MiddleBox>
-                <div className={style.leftMenu}>
-                    <label>Novo por aqui?</label>
-                    <div className={style.inputs}>
-                        <input type="text" placeholder="Usuário" required
-                            onChange={e => generateAccount({ username: e.target.value })}
-                        />
-                        <input type="text" placeholder="Email" required
-                            onChange={e => generateAccount({ email: e.target.value })}
-                        />
-                        <input type="password" placeholder="Senha" required
-                            onChange={e => generateAccount({ password: e.target.value })}
-                        />
-                    </div>
-
-                    {messageError.length > 0 && (
-                        <p>{messageError}</p>
-                    )}
-
-                    <div className={style.buttons}>
-                        <Link to="/" className={style.createAccount}>
+            <div className={style.container}>
+                <div className={style.boxSign}>
+                    <main className={style.main}>
+                        <img className={style.img} src={AddUser} title='Login' />
+                        <div className={style.title}>
+                            Crie sua conta
+                        </div>
+                        <div className={style.subTitle}>Preencha os dados abaixo para começar</div>
+                        <form onSubmit={handleSubmit(handleCreateAccount)} className={style.form}>
+                            <Input
+                                placeholder='Nome de usuário'
+                                type='text'
+                                iconSrc={User}
+                                error={errors.username?.message}
+                                {...register('username')}
+                            />
+                            <Input
+                                placeholder='Email'
+                                type='text'
+                                iconSrc={Main}
+                                error={errors.email?.message}
+                                {...register('email')}
+                            />
+                            <Input
+                                placeholder='Senha'
+                                type='password'
+                                iconSrc={Padlock}
+                                className='margin-top: 5px'
+                                error={errors.password?.message}
+                                {...register('password')}
+                            />
+                            <button className={style.button} type='submit'>Acessar</button>
+                        </form>
+                    </main>
+                    <footer className={style.footer}>
+                        <div>Já possui cadastro?</div>
+                        <Link className={style.createAccount} to={EnumRoutes.LOGIN}>
                             Fazer login
                         </Link>
-
-                        <button className={style.login} onClick={async () => await handleCreateAccount()}>
-                            Cadastrar
-                        </button>
-                    </div>
+                    </footer>
                 </div>
-                <div className={style.rightMenu}>
-                    <img src={Truck} alt='Truck' />
-                </div>
-            </MiddleBox>
-            <Loading show={loading} />
+                <Loading show={loading} />
+            </div >
         </>
     )
 }

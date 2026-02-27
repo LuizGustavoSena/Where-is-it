@@ -68,9 +68,9 @@ const Login: React.FC<Props> = ({ login, storage }) => {
                 <main className={style.main}>
                     <img className={style.img} src={Person} title='Login' />
                     <div className={style.title}>
-                        Faça login para continuar
+                        Faça login
                     </div>
-                    <div className={style.subTitle}>Por favor faça o login para acessar o site</div>
+                    <div className={style.subTitle}>Informe seu e-mail e senha para continuar</div>
                     <form onSubmit={handleSubmit(handleLogin)} className={style.form}>
                         <Input
                             placeholder='Email'
