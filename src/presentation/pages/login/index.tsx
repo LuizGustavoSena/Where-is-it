@@ -8,7 +8,9 @@ import Padlock from '@/presentation/assets/images/padlock.png';
 import Person from '@/presentation/assets/images/person.png';
 import { Input } from '@/presentation/components/input';
 import Loading from '@/presentation/components/loading';
+import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ZodError, z } from 'zod';
 import style from './index.module.css';
@@ -18,34 +20,24 @@ type Props = {
     storage: SetStorage
 };
 
+const validateLoginAccount = z.object({
+    email: z.string().email({ message: 'Email inválido' }),
+    password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' })
+});
+
 const Login: React.FC<Props> = ({ login, storage }) => {
-    const [account, setAccount] = useState<LoginAccountModel>(null);
     const [loading, setLoading] = useState(false);
-    const [messageError, setMessageError] = useState('');
     const navigate = useNavigate();
 
-    const validateLoginAccount = z.object({
-        email: z.string().email({ message: 'Email inválido' }),
-        password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' })
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginAccountModel>(
+        { resolver: zodResolver(validateLoginAccount) }
+    );
 
-    const generateAccount = (props: Partial<LoginAccountModel>) => {
-        if (props?.email)
-            setAccount(el => ({ ...el, email: props.email }));
-
-        if (props?.password)
-            setAccount(el => ({ ...el, password: props.password }));
-    }
-
-    const handleLogin = async () => {
-        setMessageError('');
-
+    const handleLogin: SubmitHandler<LoginAccountModel> = async (data) => {
         try {
             setLoading(true);
 
-            validateLoginAccount.parse(account);
-
-            const response = await login.auth(account);
+            const response = await login.auth(data);
 
             storage.set(EnumCache.AUTH_CACHE, response.token);
 
@@ -67,8 +59,6 @@ const Login: React.FC<Props> = ({ login, storage }) => {
                 message = '';
                 error.issues.forEach(el => message += ` ${el.message}.`);
             }
-
-            setMessageError(message);
         }
     }
 
@@ -81,9 +71,24 @@ const Login: React.FC<Props> = ({ login, storage }) => {
                         Faça login para continuar
                     </div>
                     <div className={style.subTitle}>Por favor faça o login para acessar o site</div>
-                    <Input placeholder='Email' type='text' iconSrc={Main} onChange={e => generateAccount({ email: e.target.value })} />
-                    <Input placeholder='Senha' type='password' iconSrc={Padlock} className='margin-top: 5px' onChange={e => generateAccount({ password: e.target.value })} />
-                    <button className={style.button} onClick={async () => await handleLogin()}>Acessar</button>
+                    <form onSubmit={handleSubmit(handleLogin)} className={style.form}>
+                        <Input
+                            placeholder='Email'
+                            type='text'
+                            iconSrc={Main}
+                            error={errors.email?.message}
+                            {...register('email')}
+                        />
+                        <Input
+                            placeholder='Senha'
+                            type='password'
+                            iconSrc={Padlock}
+                            className='margin-top: 5px'
+                            error={errors.password?.message}
+                            {...register('password')}
+                        />
+                        <button className={style.button} type='submit'>Acessar</button>
+                    </form>
                 </main>
                 <footer className={style.footer}>
                     <div>Não tem uma conta?</div>
