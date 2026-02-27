@@ -3,10 +3,12 @@ import { RemoteLoginAccount } from '@/data/usecases/remote-login-account';
 import { EnumCache, EnumRoutes } from '@/domain/enums';
 import { LoginAccountError } from '@/domain/error/login-account-error';
 import { LoginAccountModel } from '@/domain/models/login-account';
-import Truck from '@/presentation/assets/images/TruckMobile.png';
+import Main from '@/presentation/assets/images/mail.png';
+import Padlock from '@/presentation/assets/images/padlock.png';
+import Person from '@/presentation/assets/images/person.png';
+import { Input } from '@/presentation/components/input';
 import Loading from '@/presentation/components/loading';
-import MiddleBox from '@/presentation/components/middle-box';
-import React, { memo, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { ZodError, z } from 'zod';
 import style from './index.module.css';
@@ -71,37 +73,28 @@ const Login: React.FC<Props> = ({ login, storage }) => {
     }
 
     return (
-        <>
-            <MiddleBox>
-                <div className={style.leftMenu}>
-                    <label>Bem vindo de volta</label>
-
-                    <div className={style.inputs}>
-                        <input type="text" placeholder="Email" onChange={e => generateAccount({ email: e.target.value })} />
-                        <input type="password" placeholder="Senha" onChange={e => generateAccount({ password: e.target.value })} />
+        <div className={style.container}>
+            <div className={style.boxSign}>
+                <main className={style.main}>
+                    <img className={style.img} src={Person} title='Login' />
+                    <div className={style.title}>
+                        Faça login para continuar
                     </div>
-
-                    {messageError.length > 0 && (
-                        <p>{messageError}</p>
-                    )}
-
-                    <div className={style.buttons}>
-                        <Link to={EnumRoutes.CREATE_ACCOUNT} className={style.createAccount}>
-                            Criar conta
-                        </Link>
-
-                        <button onClick={async () => await handleLogin()} className={style.login}>
-                            Entrar
-                        </button>
-                    </div>
-                </div>
-                <div className={style.rightMenu}>
-                    <img src={Truck} alt='Truck' />
-                </div>
-            </MiddleBox>
+                    <div className={style.subTitle}>Por favor faça o login para acessar o site</div>
+                    <Input placeholder='Email' type='text' iconSrc={Main} onChange={e => generateAccount({ email: e.target.value })} />
+                    <Input placeholder='Senha' type='password' iconSrc={Padlock} className='margin-top: 5px' onChange={e => generateAccount({ password: e.target.value })} />
+                    <button className={style.button} onClick={async () => await handleLogin()}>Acessar</button>
+                </main>
+                <footer className={style.footer}>
+                    <div>Não tem uma conta?</div>
+                    <Link className={style.createAccount} to={EnumRoutes.CREATE_ACCOUNT}>
+                        Criar conta
+                    </Link>
+                </footer>
+            </div>
             <Loading show={loading} />
-        </>
+        </div >
     )
 };
 
-export default memo(Login);
+export default Login;

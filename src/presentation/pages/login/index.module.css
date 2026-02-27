@@ -1,84 +1,67 @@
-.leftMenu {
-    width: 50%;
-    height: 100%;
+.container {
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-
-    label {
-        color: #5D6A90;
-        font-size: 30px;
-    }
-
-    .inputs {
-        margin-top: 60px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-
-        input {
-            background: transparent;
-            border: 2px solid #5D6A90;
-            padding: 10px;
-            width: 60%;
-            /* color: white; */
-            border-radius: 5px;
-            margin-bottom: 30px;
-        }
-    }
-
-    .buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 60%;
-
-        .createAccount,
-        .login {
-            width: 40%;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 20px;
-        }
-
-        .createAccount {
-            background: transparent;
-            color: #5D6A90;
-            text-decoration: none;
-            border: 1px solid #5D6A90;
-            text-align: center;
-        }
-
-        .login {
-            width: 40%;
-            text-decoration: none;
-            text-align: center;
-            background-color: #5D6A90;
-            color: white;
-            border: none;
-        }
-    }
-
-    p {
-        color: red;
-        font-size: 20px;
-        margin: 0px 0px 10px 0px;
-    }
-
+    justify-content: center;
 }
 
-.rightMenu {
-    width: 50%;
-    height: 100%;
+.boxSign {
+    width: 400px;
+    height: 430px;
+    background-color: #DAE3FF;
+    border-radius: 10px;
+    padding: 5px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 
-    img {
-        width: 120%;
-        margin-top: 150px;
-        object-fit: contain;
-    }
+.main {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.img {
+    margin-bottom: 30px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.subTitle {
+    margin-bottom: 20px;
+}
+
+.button {
+    border: none;
+    width: 100%;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 13px;
+    display: flex;
+}
+
+.createAccount {
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+    color: inherit;
 }
