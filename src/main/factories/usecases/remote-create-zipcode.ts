@@ -1,6 +1,6 @@
 import { RemoteCreateZipcode } from "@/data/usecases/remote-create-zipcode";
-import { makeAuthorizeHttpClient } from "../decorators/authorize-http-client";
+import { makeRefreshTokenHttpClient } from "../decorators/refresh-token-http-client";
 
 export const makeRemoteCreateZipcode = (): RemoteCreateZipcode => new RemoteCreateZipcode(
-    makeAuthorizeHttpClient()
+    makeRefreshTokenHttpClient()
 );
