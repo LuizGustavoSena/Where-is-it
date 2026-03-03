@@ -1,5 +1,4 @@
 import Login from "@/presentation/pages/login";
-import { memo } from "react";
 import { makeRemoteLoginAccount } from "../usecases/remote-login-account";
 
 const MakeLogin: React.FC = () => {
@@ -9,4 +8,4 @@ const MakeLogin: React.FC = () => {
     );
 }
 
-export default memo(MakeLogin);
+export default MakeLogin;
