@@ -7,7 +7,7 @@ import { HttpClient, HttpStatusCode } from "../protocols/http";
 export class RemoteLoginAccount implements LoginAccount {
     constructor(
         private httpClient: HttpClient,
-        private readonly setStorage: SetStorage,
+        private setStorage: SetStorage,
     ) { };
 
     async auth(params: RequestLoginAccount): Promise<ResponseLoginAccount> {

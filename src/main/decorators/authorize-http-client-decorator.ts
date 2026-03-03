@@ -10,13 +10,11 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
 
     async request(data: HttpRequest): Promise<HttpResponse<any>> {
         const accessToken = this.getStorage.get(EnumCache.AUTH_CACHE);
-        const refreshToken = this.getStorage.get(EnumCache.REFRESH_CACHE);
 
         if (accessToken) {
             Object.assign(data, {
                 headers: Object.assign(data.headers || {}, {
                     'authorization': `Bearer ${accessToken}`,
-                    'refreshToken': refreshToken
                 })
             })
         }
