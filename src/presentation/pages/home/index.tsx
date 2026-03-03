@@ -8,6 +8,7 @@ import { deleteZipcode, getRoutesParams, TrackingZipcode } from "@/domain/models
 import { ZipcodeProps } from "@/domain/models/get-zipcodes";
 import { GetTrackingZipcode } from "@/domain/usecases/get-tracking-zipcode";
 import { makeLocalStorageAdapter } from "@/main/factories/cache/local-storage-cache";
+import EmptyFolder from '@/presentation/assets/images/empty-folder.png';
 import LogoutIcon from '@/presentation/assets/images/logout.png';
 import Trash from '@/presentation/assets/images/trash.png';
 import Loading from "@/presentation/components/loading";
@@ -26,7 +27,6 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
     const [loading, setLoading] = useState(false);
     const [zipcodeIndex, setzipcodeIndex] = useState<number>();
     const [routes, setRoutes] = useState<TrackingZipcode>();
-    const [messageError, setmessageError] = useState('');
     const [valuesForm, setValuesForm] = useState<CreateZipcodeModel>(null);
     const [zipcodes, setZipcodes] = useState<ZipcodeProps[]>(null);
 
@@ -49,16 +49,12 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
         } catch (error) {
             if (error instanceof UnauthorizedError)
                 navigate(EnumRoutes.LOGIN);
-
-            setmessageError(error.message);
         } finally {
             setLoading(false);
         }
     }
 
     useEffect(() => {
-        setmessageError('');
-
         setLoading(true);
 
         loadZipcodes();
@@ -85,8 +81,6 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
 
                 setZipcodes(prev => [...prev, { ...valuesForm, id: '' }]);
             });
-        } catch (error) {
-            setmessageError(error.message);
         } finally {
             setLoading(false);
         }
@@ -106,8 +100,6 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
         } catch (error) {
             if (error instanceof UnauthorizedError)
                 navigate(EnumRoutes.LOGIN);
-
-            setmessageError(error.message);
         } finally {
             setLoading(false);
         }
@@ -131,8 +123,6 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
         } catch (error) {
             if (error instanceof UnauthorizedError)
                 navigate(EnumRoutes.LOGIN);
-
-            setmessageError(error.message);
         } finally {
             setLoading(false);
         }
@@ -177,37 +167,45 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                     </div>
                 </div>
                 <div className={style.boxHome}>
-                    <div className={style.left}>
-                        {zipcodes && zipcodes.map((zipcode, index) => (
-                            <div key={zipcode.id} className={`${style.nameZipcode} ${zipcodeIndex === index ? style.houverZipcode : ''}`}>
-                                <button className={style.button} onClick={async () => await getRoutes({ code: zipcode.code, index })}>
-                                    {zipcode.name}
-                                </button>
-                                <button className={style.button} onClick={async () => await deleteZipcodeBycode({ code: zipcode.code, index })}>
-                                    <img src={Trash} alt="Trash" />
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={style.right}>
-                        <div className={style.title}>Histórico de rota da sua encomenda</div>
-                        <div className={style.containerTracking}>
-                            <div className={style.start}>{routes?.code ? 'Código de rastreamento' : ''}</div>
-                            <div className={style.title}>{routes?.code}</div>
-                            {routes?.routes && routes.routes.map((route, index) => (
-                                <div key={index} className={style.trackBox}>
-                                    <div className={style.description}>{route.description}</div>
-                                    {route.start && <div className={style.start}>De {route.start}</div>}
-                                    {route.end && <div>{`Para ${route.end}`}</div>}
-                                    {route.date && <div className={style.date}>{route.date}</div>}
+                    {zipcodes?.length > 0 ? zipcodes.map((zipcode, index) => (
+                        <>
+                            <div className={style.left}>
+                                <div key={zipcode.id} className={`${style.nameZipcode} ${zipcodeIndex === index ? style.houverZipcode : ''}`}>
+                                    <button className={style.button} onClick={async () => await getRoutes({ code: zipcode.code, index })}>
+                                        {zipcode.name}
+                                    </button>
+                                    <button className={style.button} onClick={async () => await deleteZipcodeBycode({ code: zipcode.code, index })}>
+                                        <img src={Trash} alt="Trash" />
+                                    </button>
                                 </div>
-                            ))}
+
+                            </div>
+                            <div className={style.right}>
+                                <div className={style.title}>Histórico de rota da sua encomenda</div>
+                                <div className={style.containerTracking}>
+                                    <div className={style.start}>{routes?.code ? 'Código de rastreamento' : ''}</div>
+                                    <div className={style.title}>{routes?.code}</div>
+                                    {routes?.routes && routes.routes.map((route, index) => (
+                                        <div key={index} className={style.trackBox}>
+                                            <div className={style.description}>{route.description}</div>
+                                            {route.start && <div className={style.start}>De {route.start}</div>}
+                                            {route.end && <div>{`Para ${route.end}`}</div>}
+                                            {route.date && <div className={style.date}>{route.date}</div>}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </>
+                    )) : (
+                        <div className={style.notFoundItems}>
+                            <img src={EmptyFolder} alt="Empty folder" />
+                            <div className={style.title}>Não tem nenhum item aqui</div>
+                            <div>Comece adicionando alguma encomenda</div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </>
-
     )
 };
 
