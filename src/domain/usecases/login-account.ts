@@ -9,5 +9,6 @@ export type RequestLoginAccount = {
 }
 
 export type ResponseLoginAccount = {
-    token: string
+    token: string;
+    refreshtoken: string;
 }

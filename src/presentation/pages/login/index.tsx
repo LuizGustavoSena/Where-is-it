@@ -1,6 +1,5 @@
-import { SetStorage } from '@/data/protocols/cache';
 import { RemoteLoginAccount } from '@/data/usecases/remote-login-account';
-import { EnumCache, EnumRoutes } from '@/domain/enums';
+import { EnumRoutes } from '@/domain/enums';
 import { LoginAccountError } from '@/domain/error/login-account-error';
 import { LoginAccountModel } from '@/domain/models/login-account';
 import Main from '@/presentation/assets/images/mail.png';
@@ -17,7 +16,6 @@ import style from './index.module.css';
 
 type Props = {
     login: RemoteLoginAccount;
-    storage: SetStorage
 };
 
 const validateLoginAccount = z.object({
@@ -25,7 +23,7 @@ const validateLoginAccount = z.object({
     password: z.string().min(8, { message: 'Senha precisa ter no mínimo 8 caracteres' })
 });
 
-const Login: React.FC<Props> = ({ login, storage }) => {
+const Login: React.FC<Props> = ({ login }) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -37,9 +35,7 @@ const Login: React.FC<Props> = ({ login, storage }) => {
         try {
             setLoading(true);
 
-            const response = await login.auth(data);
-
-            storage.set(EnumCache.AUTH_CACHE, response.token);
+            await login.auth(data);
 
             setLoading(false);
 
