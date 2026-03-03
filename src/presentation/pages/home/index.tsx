@@ -90,8 +90,6 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
         try {
             setLoading(true);
 
-            setRoutes(null);
-
             setzipcodeIndex(index);
 
             const response = await getTrackingZipcode.execute(code);
@@ -162,7 +160,7 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                             value={valuesForm?.code || ''}
                         />
                         <button className={style.buttonSearch} onClick={async () => await handleCreateZipcode()}>
-                            Pesquisar
+                            Adicionar
                         </button>
                     </div>
                 </div>
@@ -185,14 +183,20 @@ const Home: React.FC<Props> = ({ getZipcodes, getTrackingZipcode, createZipcode,
                                 <div className={style.containerTracking}>
                                     <div className={style.start}>{routes?.code ? 'Código de rastreamento' : ''}</div>
                                     <div className={style.title}>{routes?.code}</div>
-                                    {routes?.routes && routes.routes.map((route, index) => (
+                                    {routes?.routes?.length > 0 ? routes.routes.map((route, index) => (
                                         <div key={index} className={style.trackBox}>
                                             <div className={style.description}>{route.description}</div>
                                             {route.start && <div className={style.start}>De {route.start}</div>}
                                             {route.end && <div>{`Para ${route.end}`}</div>}
                                             {route.date && <div className={style.date}>{route.date}</div>}
                                         </div>
-                                    ))}
+                                    )) : (
+                                        <div className={style.notFoundItems}>
+                                            <img src={EmptyFolder} alt="Empty folder" />
+                                            <div className={style.title}>Não conseguimos identificar a encomenda</div>
+                                            <div>Selecione a encomenda que deseja rastrear</div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </>

@@ -1,5 +1,4 @@
 import { EnumRoutes } from '@/domain/enums';
-import { CreateAccountError } from '@/domain/error/create-account-error';
 import { CreateAccountModel } from '@/domain/models/create-account';
 import { AddAccount } from '@/domain/usecases';
 import AddUser from '@/presentation/assets/images/add-user.png';
@@ -12,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from "react-router-dom";
-import { ZodError, z } from 'zod';
+import { z } from 'zod';
 import style from './index.module.css';
 
 type Props = {
@@ -43,21 +42,8 @@ const CreateAccount: React.FC<Props> = ({ addAccount }) => {
             setLoading(false);
 
             navigate(EnumRoutes.LOGIN);
-        } catch (error) {
-            if (!error || !error.message)
-                return;
-
+        } finally {
             setLoading(false);
-
-            let message = 'Erro inesperado';
-
-            if (error instanceof CreateAccountError)
-                message = error.message;
-
-            if (error instanceof ZodError) {
-                message = '';
-                error.issues.forEach(el => message += ` ${el.message}.`);
-            }
         }
     };
 
